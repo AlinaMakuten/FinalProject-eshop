@@ -1,0 +1,10 @@
+{% autoescape off %}
+
+Labas {{user.first_name}},
+
+Prašau paspauskite žemiau esančią nuorodą, norėdami patvirtinti jūsų registraciją.
+http://{{domain}}{% url 'activate' uidb64=uid token=token %}
+
+Ignoruokite šį laišką, jeigu jungiatės ne Jūs.
+
+{% endautoescape %}

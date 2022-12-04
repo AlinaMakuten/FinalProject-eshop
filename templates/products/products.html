@@ -1,0 +1,93 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section class="section-pagetop bg">
+<div class="container">
+	{% if 'search' in request.path %}
+		<h2 class="title-page">Paieškos rezultatai</h2>
+	{% else %}
+		<h2 class="title-page">Knygos</h2>
+	{% endif %}
+
+</div>
+</section>
+
+
+<section class="section-content padding-y">
+<div class="container">
+
+
+<header class="border-bottom mb-4 pb-3">
+		<div class="form-inline">
+			<span class="mr-md-auto">Viso knygų: <b>{{ product_count }}</b> </span>
+
+		</div>
+</header><!-- sect-heading -->
+
+<div class="row">
+	{% if products %}
+	{% for product in products %}
+	<div class="col-md-4">
+		<figure class="card card-product-grid">
+			<div class="img-wrap">
+
+				<a href="{{ product.get_url }}"><img src="{{ product.images.url }}"></a>
+
+			</div> <
+			<figcaption class="info-wrap">
+				<div class="fix-height">
+					<a href="{{ product.get_url }}" class="title">{{ product.product_name }}</a>
+					<div class="price-wrap mt-2">
+						<span class="price"> {{ product.price }} €</span>
+					</div>
+				</div>
+				<a href="{{ product.get_url }}" class="btn btn-block btn-primary">Peržiūrėti </a>
+			</figcaption>
+		</figure>
+	</div>
+	{% endfor %}
+	{% else %}
+	<div>
+		<h2>Atsiprašome, tokios knygos neturime.</h2>
+	</div>
+	{% endif %}
+</div>
+
+<nav class="mt-4" aria-label="Page navigation sample">
+	{% if products.has_other_pages %}
+	  <ul class="pagination">
+			{% if products.has_previous %}
+	    <li class="page-item"><a class="page-link" href="?page={{products.previous_page_number}}">< Atgal</a></li>
+			{% else %}
+			<li class="page-item disabled"><a class="page-link" href="#">< Atgal</a></li>
+			{% endif %}
+
+			{% for i in products.paginator.page_range %}
+				{% if products.number == i %}
+	    		<li class="page-item active"><a class="page-link" href="#">{{i}}</a></li>
+				{% else %}
+					<li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+				{% endif %}
+	    {% endfor %}
+
+			{% if products.has_next %}
+	    	<li class="page-item"><a class="page-link" href="?page={{products.next_page_number}}">Pirmyn ></a></li>
+			{% else %}
+				<li class="page-item disabled"><a class="page-link" href="#">Pirmyn ></a></li>
+			{% endif %}
+	  </ul>
+	{% endif %}
+</nav>
+
+</div>
+
+</section>
+
+
+{% endblock %}
+
+
+
