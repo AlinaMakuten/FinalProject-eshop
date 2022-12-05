@@ -16,7 +16,6 @@ def add_cart(request, product_id):
     current_user = request.user
     product = Product.objects.get(id=product_id)
     if current_user.is_authenticated:
-        print("hello")
         product_variation = []
         if request.method == 'POST':
             for item in request.POST:
@@ -56,7 +55,7 @@ def add_cart(request, product_id):
                     item.variations.clear()
                     item.variations.add(*product_variation)
                 item.save()
-            print(f"mm {cart_item}")
+            print(f"sitas else {cart_item}")
         else:
             cart_item = CartItem.objects.create(
                 product=product,
@@ -69,8 +68,6 @@ def add_cart(request, product_id):
             cart_item.save()
 
             print(f"uuuu {cart_item}")
-
-        print("pris")
 
         return redirect('krepselis')
 
