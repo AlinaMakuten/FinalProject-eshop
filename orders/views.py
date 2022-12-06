@@ -151,6 +151,7 @@ def order_complete(request):
             'ordered_products': ordered_products,
             'order_number': order.order_number,
             'transID': payment.payment_id,
+            'payment': payment,
             'subtotal': subtotal,
         }
         return render(request, 'orders/order_complete.html', context=context)

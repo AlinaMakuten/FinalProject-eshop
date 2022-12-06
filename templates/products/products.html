@@ -8,8 +8,16 @@
 <div class="container">
 	{% if 'search' in request.path %}
 		<h2 class="title-page">Paieškos rezultatai</h2>
+	{% elif 'vaikams-ir-jaunimui' in request.path %}
+		<h2 class="title-page">Knygos vaikams ir jaunimui</h2>
+	{% elif 'grozine-literatura' in request.path %}
+		<h2 class="title-page">Grožinės literatūros knygos</h2>
+	{% elif 'populiarioji-psichologija' in request.path %}
+		<h2 class="title-page">Populiarioji psichologija</h2>
+	{% elif 'pomegiai-seima-sveikata' in request.path %}
+		<h2 class="title-page">Pomėgiai, šeima, sveikata</h2>
 	{% else %}
-		<h2 class="title-page">Knygos</h2>
+		<h2 class="title-page">Visos knygos</h2>
 	{% endif %}
 
 </div>
@@ -36,7 +44,7 @@
 
 				<a href="{{ product.get_url }}"><img src="{{ product.images.url }}"></a>
 
-			</div> <
+			</div>
 			<figcaption class="info-wrap">
 				<div class="fix-height">
 					<a href="{{ product.get_url }}" class="title">{{ product.product_name }}</a>

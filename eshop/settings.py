@@ -140,7 +140,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'accounts.Account'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT =  os.path.join(BASE_DIR, 'smedia')
+MEDIA_ROOT =  os.path.join(BASE_DIR, '../media')
+# MEDIA_ROOT = BASE_DIR /'media'
+
 
 from django.contrib.messages import constants as messages
 MESSAGE_TAGS = {

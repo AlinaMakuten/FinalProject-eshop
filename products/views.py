@@ -1,9 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Product, Category
+from .models import Product, ReviewRating
+from products.models import Category
 from carts.models import CartItem
 from carts.views import _cart_id
 from django.core.paginator import Paginator
 from django.db.models import Q
+from .forms import ReviewForm
+from django.contrib import messages
 from orders.models import OrderProduct
 
 
@@ -16,7 +19,7 @@ def products(request, category_slug=None):
     if category_slug != None:
         categories = get_object_or_404(Category, slug=category_slug)
         products = Product.objects.filter(category=categories, is_available=True)
-        paginator = Paginator(products, 2)
+        paginator = Paginator(products, 3)
         page = request.GET.get('page')
         paged_products = paginator.get_page(page)
         product_count = products.count()
@@ -50,10 +53,14 @@ def product_detail(request, category_slug, product_slug):
     else:
         orderproduct = None
 
+
+    reviews = ReviewRating.objects.filter(product_id=single_product.id, status=True)
+
     context = {
         'single_product': single_product,
         'in_cart': in_cart,
         'orderproduct': orderproduct,
+        'reviews' : reviews,
     }
     return render(request, 'products/product_detail.html', context=context)
 
@@ -71,4 +78,26 @@ def search(request):
       }
     return render (request, 'products/products.html', context=context)
 
+
+def submit_review(request, product_id):
+    url = request.META.get('HTTP_REFERER')
+    if request.method == 'POST':
+        try:
+            reviews = ReviewRating.objects.get(user__id=request.user.id, product__id=product_id)
+            form = ReviewForm(request.POST, instance=reviews)
+            form.save()
+            messages.success(request, 'Ačiū, jūsų atsiliepimas atnaujintas.')
+            return redirect(url)
+        except ReviewRating.DoesNotExist:
+            form = ReviewForm(request.POST)
+            if form.is_valid():
+                data = ReviewRating()
+                data.rating = form.cleaned_data['rating']
+                data.review = form.cleaned_data['review']
+                data.ip = request.META.get('REMOTE_ADDR')
+                data.product_id = product_id
+                data.user_id = request.user.id
+                data.save()
+                messages.success(request, 'Ačiū už atsiliepimą!')
+                return redirect(url)
 

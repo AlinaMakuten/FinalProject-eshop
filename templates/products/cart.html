@@ -89,11 +89,11 @@
 		<div class="card">
 		<div class="card-body">
 			<dl class="dlist-align">
-			  <dt>Total price:</dt>
+			  <dt>Kaina:</dt>
 			  <dd class="text-right">{{total}}</dd>
 			</dl>
 			<dl class="dlist-align">
-			  <dt>Iš jų PVM:</dt>
+			  <dt>PVM:</dt>
 			  <dd class="text-right"> {{tax}}</dd>
 			</dl>
 			<dl class="dlist-align">
@@ -101,9 +101,7 @@
 			  <dd class="text-right text-dark b"><strong>{{grand_total}} €</strong></dd>
 			</dl>
 			<hr>
-			<p class="text-center mb-3">
-				<img src="{% static './images/misc/payments.png' %}" height="26">
-			</p>
+
 			<a href="{% url 'checkout' %}" class="btn btn-primary btn-block"> Užsakyti </a>
 			<a href="{% url 'knygos' %}" class="btn btn-light btn-block">Tęsti apsipirkimą</a>
 		</div> <!-- card-body.// -->
