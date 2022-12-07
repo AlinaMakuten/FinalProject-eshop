@@ -116,7 +116,7 @@ def login(request):
                 # print(params)
 
             except:
-                return redirect('dashboard')
+                return redirect('home')
         else:
             messages.error(request, 'Jums nepavyko prisijungti!')
             return redirect('login')

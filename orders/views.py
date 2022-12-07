@@ -11,7 +11,7 @@ from django.http import JsonResponse
 
 def payments(request):
     body = json.loads(request.body)
-    # print(body)
+    print(body)
     order = Order.objects.get(user=request.user, is_ordered=False, order_number=body['orderID'])
 
     payment = Payment(
